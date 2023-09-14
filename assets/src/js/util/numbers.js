@@ -2,8 +2,13 @@ const M = 1000000
 const K = 1000
 const REGEX_TRAILING_ZEROES = /\.0+$/
 
-// format large numbers using M (millions) or K (thousands)
-// numbers lower than 10.000 are left untouched
+/**
+ * Format large numbers by replacing zeros with either M (millions) or K (thousands)
+ * Numbers lower than 10.000 are left untouched.
+ *
+ * @param {number} num
+ * @returns {string}
+ */
 function formatPretty (num) {
   let decimals = 0
 
@@ -23,6 +28,12 @@ function formatPretty (num) {
   return String(num)
 }
 
+/**
+ * Format a percentage amount (eg 0.55 or 55) as a human-readable percentage (eg 55%).
+ *
+ * @param {int|float} p
+ * @returns {string}
+ */
 function formatPercentage (p) {
   if (p < 1 && p > -1) {
     p = Math.round(p * 100)
@@ -32,13 +43,13 @@ function formatPercentage (p) {
 }
 
 /**
- Return a nice human-comprehensible number.
-
- n < 10 = 10
- n < 100 = rounds up to the nearest power of 10
- n < 1000 = rounds up to the nearest power of 100
- ....
- @return int
+ *  Return a nice human-comprehensible number.
+ *
+ *  n < 10 = 10
+ *  n < 100 = rounds up to the nearest power of 10
+ *  n < 1000 = rounds up to the nearest power of 100
+ * @param {number} n
+ * @returns {number}
  */
 function nice (n) {
   if (n < 10) {

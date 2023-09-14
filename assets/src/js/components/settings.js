@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import api from './../util/api.js'
+import {request} from '../util/api'
 import Nav from './nav.js'
 import datePresets from '../util/date-presets'
 import { __ } from '@wordpress/i18n'
@@ -30,7 +30,7 @@ export default class Settings extends Component {
     })
     const startTime = new Date()
 
-    api.request('/settings', {
+    request('/settings', {
       method: 'POST',
       body: settings
     }).then(() => {

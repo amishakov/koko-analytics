@@ -1,5 +1,5 @@
 import React from "react"
-import api from '../util/api.js'
+import { request } from '../util/api.js'
 import '../../sass/chart.scss'
 import numbers from '../util/numbers'
 import { modify } from '../util/colors'
@@ -7,9 +7,9 @@ import { isLastDayOfMonth, format, toISO8601 } from '../util/dates.js'
 import { __ } from '@wordpress/i18n'
 import {Component} from 'react'
 
-const color1 = window.koko_analytics.colors[window.koko_analytics.colors.length - 1]
+const {colors, date_format} = window.koko_analytics;
+const color1 = colors.pop()
 const color2 = modify(color1, -20)
-const dateFormat = window.koko_analytics.date_format;
 
 function yScale (yMax) {
   const max = numbers.nice(yMax)
@@ -81,7 +81,7 @@ export default class Chart extends Component {
     const { startDate, endDate } = this.props
 
     // fetch actual stats
-    api.request('/stats', {
+    request('/stats', {
       body: {
         start_date: toISO8601(startDate),
         end_date: toISO8601(endDate)
@@ -163,7 +163,7 @@ export default class Chart extends Component {
     return (evt) => {
       el.innerHTML = `
       <div class="tooltip-inner">
-        <div class="heading">${format(data.date, dateFormat, { day: !groupByMonth })}</div>
+        <div class="heading">${format(data.date, date_format, { day: !groupByMonth })}</div>
         <div class="content">
           <div class="visitors" style="border-top-color: ${color2}">
             <div class="amount">${data.visitors}</div>
@@ -244,15 +244,15 @@ export default class Chart extends Component {
                 {dataset.map((d, i) => {
                   let label = null
                   if (i === 0) {
-                    label = format(d.date,  dateFormat, { day: !groupByMonth })
+                    label = format(d.date,  date_format, { day: !groupByMonth })
                   } else if (i === (ticks - 1)) {
-                    label = format(d.date,  dateFormat, { day: !groupByMonth, year: false })
+                    label = format(d.date,  date_format, { day: !groupByMonth, year: false })
                   } else if (isLargeScreen) {
                     // for large screens only
                     if (ticks <= 7 || d.date.getDate() === 1) {
-                      label = format(d.date, dateFormat, { year: false, day: !groupByMonth})
+                      label = format(d.date, date_format, { year: false, day: !groupByMonth})
                     } else if (ticks <= 31 && i >= 3 && i < (ticks - 3) && d.date.getDay() === 0) {
-                      label = format(d.date, dateFormat, { year: false, day: !groupByMonth})
+                      label = format(d.date, date_format, { year: false, day: !groupByMonth})
                     }
                   }
 

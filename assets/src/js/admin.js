@@ -14,9 +14,7 @@ function Page() {
   },[])
 
   return (
-    <div>
-      {path === '/' ? <Dashboard history={history} /> : <Settings history={history} />}
-    </div>
+    path === '/' ? <Dashboard history={history} /> : <Settings history={history} />
   )
 }
 

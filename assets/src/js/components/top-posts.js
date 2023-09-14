@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Pagination from './table-pagination.js'
-import api from '../util/api.js'
+import {request} from '../util/api'
 import {toISO8601} from '../util/dates'
 import { __ } from '@wordpress/i18n'
 
@@ -43,7 +43,7 @@ export default class TopPosts extends Component {
   }
 
   loadData (offset = this.state.offset) {
-    api.request('/posts', {
+    request('/posts', {
       body: {
         start_date: toISO8601(this.props.startDate),
         end_date: toISO8601(this.props.endDate),

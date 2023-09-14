@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import '../../sass/totals.scss'
 import numbers from '../util/numbers.js'
 import {toISO8601} from '../util/dates'
-import api from '../util/api.js'
+import {request} from '../util/api'
 import Realtime from './realtime.js'
 import { __ } from '@wordpress/i18n'
 
@@ -64,7 +64,7 @@ export default class Totals extends Component {
 
     Promise.all([
       // fetch stats for current period
-      api.request('/stats', {
+      request('/stats', {
         body: {
           start_date: toISO8601(this.props.startDate),
           end_date: toISO8601(this.props.endDate)
@@ -77,7 +77,7 @@ export default class Totals extends Component {
       }),
 
       // fetch stats for previous period
-      api.request('/stats', {
+      request('/stats', {
         body: {
           start_date: toISO8601(previousStartDate),
           end_date: toISO8601(previousEndDate)
